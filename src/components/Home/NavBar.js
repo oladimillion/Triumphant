@@ -10,6 +10,10 @@ const Header = styled.header`
   @media (max-width: 1220px) {
     padding: 0 10px;
   }
+
+  @media (max-width: 700px) {
+    height: 60px;
+  }
 `
 
 const LogoLink = styled.a`
@@ -19,6 +23,10 @@ const LogoLink = styled.a`
   text-decoration: none;
   position: relative;
   top: -5px;
+
+  @media (max-width: 700px) {
+    top: 0px;
+  }
 `
 
 const Logo = styled.div`
@@ -27,6 +35,10 @@ const Logo = styled.div`
   font-family: Roboto;
   color: var(--primary-color);
   text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 700px) {
+    font-size: 20px;
+  }
 `
 
 const NavItemWrapper = styled.div`
@@ -58,7 +70,7 @@ const Links = styled.a`
 
 const MobileMenu = styled.div`
   margin: auto 20px;
-  font-size: 40px;
+  font-size: 30px;
   display: none;
 
   @media (max-width: 700px) {

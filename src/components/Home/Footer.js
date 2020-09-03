@@ -78,6 +78,11 @@ const FooterText = styled.p`
   font-size: 16px;
   line-height: 18px;
   color: #fff;
+
+  @media (max-width: 700px) {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
 `
 
 const CopyrightText = styled(FooterText)``
@@ -102,6 +107,10 @@ const Links = styled.a`
   color: #fff;
   text-decoration: none;
   margin-top: 20px;
+
+  @media (max-width: 700px) {
+    font-size: 14px;
+  }
 `
 
 export const Footer = () => {
@@ -123,10 +132,13 @@ export const Footer = () => {
           <FooterText>
             Triumphant Nusery  and Primary 
             <br />
-            <br />
             School, Ado-Ekiti, Ekiti State, Nigeria
           </FooterText>
-          <Links href="tel:+234-812-345-6789">+234-812-345-6789</Links>
+          <div>
+            <Links href="tel:+2348065135427">+234-806-513-5427</Links>
+            <br />
+            <Links href="tel:+2348062358310">+234-806-235-8310</Links>
+          </div>
           <Links href="mailto:triumphant@email.com">triumphant@email.com</Links>
         </Column>
       </Flex>
