@@ -109,7 +109,7 @@ export const Footer = () => {
     <FooterWrapper>
       <Flex>
         <Column>
-          <LogoLink href="/"><Logo /></LogoLink>
+          <LogoLink href="#"><Logo /></LogoLink>
           <CopyrightText>Copyright @ Triumphant 2019</CopyrightText>
         </Column>
         <Column justifyContent="flex-start">

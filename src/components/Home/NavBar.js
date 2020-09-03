@@ -69,12 +69,12 @@ const MobileMenu = styled.div`
 export const NavBar = () => {
   return (
     <Header>
-      <LogoLink href="/">
+      <LogoLink href="#">
         <Logo>Triumphant</Logo>
       </LogoLink>
       <NavItemWrapper>
         <NavItems>
-          <Links href="/">Home</Links>
+          <Links href="#">Home</Links>
           <Links color="#9E9BA3" href="#about-us">About Us</Links>
           <Links color="#9E9BA3" href="#mission">Mission</Links>
           <Links color="#9E9BA3" href="#map">Map</Links>

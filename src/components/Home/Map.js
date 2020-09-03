@@ -51,8 +51,7 @@ export const Map = () => {
     <MapWrapper id="map">
       <Flex>
         <MapIFrame
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA3AkANvKipgcfrHF951q5kzTA_le2oVDA
-    &q=Space+Needle,Seattle+WA" 
+          src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&q=Space+Needle,Seattle+WA`} 
           allowfullscreen 
         />
         <MapEllipse />
