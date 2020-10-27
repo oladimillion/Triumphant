@@ -119,7 +119,7 @@ export const Footer = () => {
       <Flex>
         <Column>
           <LogoLink href="#"><Logo /></LogoLink>
-          <CopyrightText>Copyright @ Triumphant 2019</CopyrightText>
+          <CopyrightText>Copyright @ Triumphant 2020</CopyrightText>
         </Column>
         <Column justifyContent="flex-start">
           <UsefulLinks>Useful Links</UsefulLinks>
