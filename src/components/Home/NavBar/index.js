@@ -113,7 +113,7 @@ const NavItem = getNavItem(Links)
 
 export const NavBar = withSideNav(() => {
 
-  const { showSideNav, toggleSideNav } = React.useContext(SideNavContext)
+  const { toggleSideNav } = React.useContext(SideNavContext)
 
   return (
     <Header>
