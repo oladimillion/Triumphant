@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { Home } from './views/Home'
+import { Routes } from './Routes'
 import './App.css'
 
 const AppWrapper = styled.div``
@@ -8,7 +8,7 @@ const AppWrapper = styled.div``
 function App() {
   return (
     <AppWrapper>
-      <Home />
+      <Routes />
     </AppWrapper>
   );
 }

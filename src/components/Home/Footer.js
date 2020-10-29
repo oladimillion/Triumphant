@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import footerBg from '../../assets/footerbg.svg'
 import footerLogo from '../../assets/footerlogo.svg'
 
@@ -100,7 +101,7 @@ const Divider = styled.hr`
   margin-top: 10px;
 `
 
-const Links = styled.a`
+const linkStyle = `
   font-weight: bold;
   font-size: 16px;
   line-height: 18px;
@@ -111,6 +112,14 @@ const Links = styled.a`
   @media (max-width: 700px) {
     font-size: 14px;
   }
+`
+
+const Links = styled.a`
+  ${linkStyle}
+`
+
+const StyledLink = styled(Link)`
+  ${linkStyle}
 `
 
 export const Footer = () => {
@@ -124,7 +133,7 @@ export const Footer = () => {
         <Column justifyContent="flex-start">
           <UsefulLinks>Useful Links</UsefulLinks>
           <Divider />
-          <Links href="#">Application Form</Links>
+          <StyledLink to='/apply'>Application Form</StyledLink>
           <Links href="#">List of books</Links>
           <Links href="#">School bills</Links>
         </Column>
