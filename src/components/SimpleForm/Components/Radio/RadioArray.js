@@ -102,6 +102,7 @@ RadioArray.propTypes = {
 }
 
 RadioArray.displayName = 'RadioArray'
+
 hoistNonReactStatics(RadioArray, RadioComponent)
 
 
