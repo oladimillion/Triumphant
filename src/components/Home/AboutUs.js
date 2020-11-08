@@ -1,17 +1,15 @@
 import React from 'react';
 import styled from 'styled-components'
 import ellipseImage from '../../assets/ellipse.svg'
+import { homeSectionStyle } from './styled'
 
 const AboutUsWrapper = styled.div`
-  min-height: 482px;
-  height: auto;
   background-image: url(${ellipseImage});
   background-repeat: no-repeat;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-
   padding: 20px 40px;
 `
 
@@ -26,12 +24,16 @@ const AboutUsImage = styled.div`
   font-weight: bold;
 `
 
-const AboutUsTitle = styled.div`
-  font-size: 20px;
-  line-height: 21px;
-  margin-top: 30px;
-  font-weight: bold;
-  color: var(--primary-color);
+const AboutUsTitle = styled.h3`
+  ${homeSectionStyle};
+
+  a {
+    font-size: 20px;
+    line-height: 21px;
+    margin-top: 30px;
+    font-weight: bold;
+    color: var(--primary-color);
+  }
 `
 
 const AboutUsText = styled.p`
@@ -59,8 +61,10 @@ const Flex = styled.div`
 
 export const AboutUs = () => {
   return (
-    <AboutUsWrapper id="about-us">
-      <AboutUsTitle>About Us</AboutUsTitle>
+    <AboutUsWrapper>
+      <AboutUsTitle id="about-us">
+        <a href="#about-us">About Us</a>
+      </AboutUsTitle>
       <Flex>
         <AboutUsText>
           Triumphant nursery and primary school was established in 2013 as a group of individuals coming for holiday coaching for the long vacation, in that vein, the academic session for 2013/2014 commenced at the parmanent site. This year 2019 thus marks the 6th year of existence of the school.

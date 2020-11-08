@@ -1,12 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import { Form, Radio as UIRadio } from 'semantic-ui-react'
+import PropTypes from 'prop-types'
 
-export const Radio = styled(UIRadio)``
-Radio.displayName = 'Radio'
-Radio.defaultProps = {
-  toggle: true,
-}
 
 const RadioContext = React.createContext({
   value: null,
@@ -58,9 +55,8 @@ RadioComponent.defaultProps = {
 }
 
 const RadioComponentItem = (props) => {
-  const { as: Component } = props
   const { value, name, onChange, disabled } = React.useContext(RadioContext)
-  const { value: fieldValue, label, ...rest } = props
+  const { Component, value: fieldValue, label, ...rest } = props
   const dataProps = {
     checked: fieldValue === value,
     onChange: () => onChange(fieldValue),
@@ -82,15 +78,30 @@ const RadioComponentItem = (props) => {
 RadioComponentItem.defaultProps = {
   value: null,
   label: null,
-  name: null,
-  as: null,
+  Component: null,
 }
 
-export const RadioArray = RadioComponent
+RadioComponentItem.propTypes = {
+  value: PropTypes.any,
+  label: PropTypes.string.isRequired,
+  Component: PropTypes.any,
+}
+
+export const RadioArray = styled(RadioComponent)
+  .attrs(() => ({
+    className: 'RadioArray',
+  }))``
 
 RadioArray.Item = RadioComponentItem
 
-RadioArray.propTypes = {}
+RadioArray.propTypes = {
+  value: PropTypes.any,
+  onChange: PropTypes.func,
+  name: PropTypes.string.isRequired,
+  children: PropTypes.any,
+}
 
 RadioArray.displayName = 'RadioArray'
+hoistNonReactStatics(RadioArray, RadioComponent)
+
 

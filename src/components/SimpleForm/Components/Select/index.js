@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { layout, space } from 'styled-system'
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import { Select as UISelect } from 'semantic-ui-react'
 
 export const Select = styled(UISelect)(
@@ -21,5 +22,7 @@ Select.defaultProps = {
 Select.propTypes = { 
   ...space.propTypes,
   ...layout.propTypes,
-  error: PropTypes.boolean,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.any]),
 }
+
+hoistNonReactStatics(Select, UISelect)

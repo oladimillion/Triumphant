@@ -17,5 +17,5 @@ TextInput.defaultProps = {
 TextInput.propTypes = { 
   ...space.propTypes,
   ...layout.propTypes,
-  error: PropTypes.boolean,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.any]),
 }

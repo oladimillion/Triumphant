@@ -1,14 +1,16 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { layout, space } from 'styled-system'
 import { TextArea as UITextArea } from 'semantic-ui-react'
 
 
-export const TextArea = styled(UITextArea)(
+const StyledTextArea = styled(UITextArea)(
   {
     resize: 'none',
     border: '1px solid rgba(34,36,38,.15)',
     'font-family': "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif",
+    'border-radius': '5px',
   },
   space,
   layout,
@@ -19,14 +21,28 @@ export const TextArea = styled(UITextArea)(
       color: rgba(0,0,0,.8);
       box-shadow: none;
     }
-    ${props.error && `
+  `
+)
+
+const TextAreaWrapper = styled.div`
+  textarea {
+    ${({ error }) => error && `
       background-color: #fff6f6;
       border-color: #e0b4b4;
       color: #9f3a38;
       box-shadow: none;
     `}
-  `
-)
+  }
+`
+
+export const TextArea = (props) => {
+  const { error, ...rest } = props
+  return (
+    <TextAreaWrapper error={error}>
+      <StyledTextArea {...rest} />
+    </TextAreaWrapper>
+  )
+}
 
 TextArea.displayName = 'TextArea'
 
@@ -39,5 +55,5 @@ TextArea.defaultProps = {
 TextArea.propTypes = { 
   ...space.propTypes,
   ...layout.propTypes,
-  error: PropTypes.bool,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.any]),
 }

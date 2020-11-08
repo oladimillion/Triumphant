@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
+import hoistNonReactStatics from 'hoist-non-react-statics';
 import { layout, space } from 'styled-system'
 import { Button as UIButton } from 'semantic-ui-react'
 
@@ -19,5 +19,6 @@ Button.displayName = 'Button'
 Button.propTypes = { 
   ...space.propTypes,
   ...layout.propTypes,
-  error: PropTypes.bool,
 }
+
+hoistNonReactStatics(Button, UIButton)

@@ -10,7 +10,6 @@ const Aside = styled.aside`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.1);
   z-index: 101;
   display: none;
   padding: 0;
@@ -23,7 +22,7 @@ const Aside = styled.aside`
   }
 `
 
-const Flex = styled.div`
+const Header = styled.header`
   display: flex;
   background: #fafafa;
   padding: 16px;
@@ -32,7 +31,7 @@ const Flex = styled.div`
   justify-content: space-between;
   position: relative;
   z-index: 1;
-  max-width: 300px;
+  width: 300px;
 `
 
 const LogoLink = styled.a`
@@ -49,8 +48,7 @@ const Logo = styled.div`
 `
 
 const NavItemWrapper = styled.div`
-  flex: 1;
-  max-width: 300px;
+  width: 300px;
   background: #fff;
 `
 
@@ -59,6 +57,12 @@ const NavItems = styled.div`
   justify-content: space-between;
   flex-direction: column;
   padding: 16px;
+`
+
+const FlexBox = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
 `
 
 const Links = styled.a`
@@ -86,7 +90,36 @@ const MobileMenu = styled.div`
   cursor: pointer;
 `
 
+const Gap = styled.div`
+  flex: 1;
+  background: ${({ show }) => show ? 'rgba(0,0,0,0.1)' : 'rgba(0,0,0,0)'};
+  transition: background ${({ show }) => show ? '3s' : '0.1s'};
+`
+
 const NavItem = getNavItem(Links);
+
+const items = [
+  {
+    href: "#",
+    text: "Home",
+  },
+  {
+    href: "#about-us",
+    text: "About Us",
+  },
+  {
+    href: "#mission",
+    text: "Mission",
+  },
+  {
+    href: "#map",
+    text: "Map",
+  },
+  {
+    href: "#portal",
+    text: "Portal",
+  },
+]
 
 export const SideNav = () => {
 
@@ -94,21 +127,22 @@ export const SideNav = () => {
 
   return (
     <Aside show={showSideNav}>
-      <Flex>
+      <Header>
         <LogoLink href="#">
           <Logo>Triumphant</Logo>
         </LogoLink>
         <MobileMenu onClick={toggleSideNav}>&#x27A4;</MobileMenu>
-      </Flex>
-      <NavItemWrapper>
-        <NavItems>
-          <NavItem href="#">Home</NavItem>
-          <NavItem href="#about-us">About Us</NavItem>
-          <NavItem href="#mission">Mission</NavItem>
-          <NavItem href="#map">Map</NavItem>
-          <NavItem href="#portal">Portal</NavItem>
-        </NavItems>
-      </NavItemWrapper>
+      </Header>
+      <FlexBox>
+        <NavItemWrapper>
+          <NavItems>
+            {items.map(({ href, text }) => (
+              <NavItem href={href} onClick={toggleSideNav}>{text}</NavItem>
+            ))}
+          </NavItems>
+        </NavItemWrapper>
+        <Gap show={showSideNav} onClick={toggleSideNav} />
+      </FlexBox>
     </Aside>
   )
 }

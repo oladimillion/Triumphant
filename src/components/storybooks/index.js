@@ -1,18 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Header, Checkbox, Segment } from 'semantic-ui-react'
-import { Button } from './Button'
-import { TextInput } from './TextInput'
-import { TextArea } from './TextArea'
-import { Select } from './Select'
+import { Divider, Header, Checkbox, Segment } from 'semantic-ui-react'
+import { Button } from '../FormSchema/Components/Button'
+import { TextInput } from '../FormSchema/Components/TextInput'
+import { TextArea } from '../FormSchema/Components/TextArea'
+import { Select } from '../FormSchema/Components/Select'
 import { Container } from './Container'
-import { RadioArray, Radio } from './Radio'
+import { RadioArray, Radio } from '../FormSchema/Components/Radio'
+import { FlexBox } from '../FormSchema/Components/FlexBox'
+import { Text } from '../FormSchema/Components/Text'
 import { countries } from './consts'
-
-const Space = styled.div`
-  width: 100%;
-  height: 20px;
-`
 
 export const StoryBooks = () => {
   return (
@@ -20,64 +17,64 @@ export const StoryBooks = () => {
       <Segment>
         <Header as='h3'>Buttons</Header>
         <Button>Click me</Button>
-        <Space />
+        <Divider />
         <Button basic icon="stop" content="Click me" />
-        <Space />
-        <Button basic loading color="orange">Click me</Button>
+        <Divider />
+        <Button basic loading color="blue">Click me</Button>
       </Segment>
 
       <Segment>
         <Header as='h3'>TextInputs</Header>
         <TextInput />
-        <Space />
+        <Divider />
         <TextInput placeholder='Search...'/>
-        <Space />
+        <Divider />
         <TextInput error placeholder='Search...'/>
       </Segment>
 
       <Segment>
         <Header as='h3'>FileInputs</Header>
         <TextInput type='file' />
-        <Space />
+        <Divider />
         <TextInput error type='file' multiple />
       </Segment>
 
       <Segment>
         <Header as='h3'>PasswordInputs</Header>
         <TextInput type='password' placeholder='**********' />
-        <Space />
+        <Divider />
         <TextInput error type='password' placeholder='**********' />
       </Segment>
 
       <Segment>
         <Header as='h3'>DateInputs</Header>
         <TextInput type='date' placeholder='YYYY/MM/DD' />
-        <Space />
+        <Divider />
         <TextInput error type='date' />
       </Segment>
 
       <Segment>
         <Header as='h3'>TextAreas</Header>
         <TextArea />
-        <Space />
+        <Divider />
         <TextArea placeholder='Type something...' />
-        <Space />
+        <Divider />
         <TextArea error placeholder='Type something...' />
       </Segment>
 
       <Segment>
         <Header as='h3'>Selects</Header>
         <Select options={countries} />
-        <Space />
+        <Divider />
         <Select options={countries} placeholder='Select your country' />
-        <Space />
+        <Divider />
         <Select options={countries} error placeholder='Select your country' />
       </Segment>
 
       <Segment>
         <Header as='h3'>Checkboxes</Header>
         <Checkbox label='Checkbox' />
-        <Space />
+        <Divider />
         <Checkbox label='Checkbox' disabled />
       </Segment>
 
@@ -93,16 +90,48 @@ export const StoryBooks = () => {
           <RadioArray.Item label='That label' value='that' />
           <RadioArray.Item label='Them label' value='them' />
         </RadioArray>
-        <Space />
+        <Divider />
         <RadioArray name='select' value={true}>
           <RadioArray.Item label='Yes' value={false} />
           <RadioArray.Item label='No' value={true} />
         </RadioArray>
       </Segment>
 
+      <Segment>
+        <Header as='h3'>FlexBox</Header>
+        <FlexBox>
+          <Div>Item</Div>
+          <Div>Item</Div>
+          <Div>Item</Div>
+          <Div>Item</Div>
+        </FlexBox>
+        <Divider />
+        <FlexBox flexDirection='column'>
+          <Div>Item</Div>
+          <Div>Item</Div>
+          <Div>Item</Div>
+          <Div>Item</Div>
+        </FlexBox>
+      </Segment>
+
+      <Segment>
+        <Header as='h3'>FlexBox</Header>
+        <Text as='span'>span tag</Text>
+        <Divider />
+        <Text>p tag</Text>
+        <Divider />
+        <Text as='i'>i tag</Text>
+        <Divider />
+        <Text as='label'>label tag</Text>
+      </Segment>
+
     </Container>
   )
 }
+
+const Div = styled.div`
+  margin: 4px;
+`
 
 
 
