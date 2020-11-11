@@ -15,13 +15,17 @@ export const Select = styled(UISelect)(
 Select.displayName = 'Select'
 
 Select.defaultProps = {
-  options: [],
   search: true,
 }
 
 Select.propTypes = { 
   ...space.propTypes,
   ...layout.propTypes,
+  search: PropTypes.bool,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string,
+    text: PropTypes.string,
+  })).isRequired,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.any]),
 }
 

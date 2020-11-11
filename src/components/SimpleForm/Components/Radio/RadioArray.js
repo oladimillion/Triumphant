@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import { Form, Radio as UIRadio } from 'semantic-ui-react'
+import { Form, Radio as SemanticRadio } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
 
@@ -56,11 +56,11 @@ RadioComponent.defaultProps = {
 
 const RadioComponentItem = (props) => {
   const { value, name, onChange, disabled } = React.useContext(RadioContext)
-  const { Component, value: fieldValue, label, ...rest } = props
+  const { Component, value: fieldValue, text, ...rest } = props
   const dataProps = {
     checked: fieldValue === value,
     onChange: () => onChange(fieldValue),
-    label,
+    label: text,
     name,
     disabled,
   }
@@ -69,7 +69,7 @@ const RadioComponentItem = (props) => {
       {
         Component ? 
           <Component {...dataProps} /> :
-          <UIRadio {...dataProps} />
+          <SemanticRadio {...dataProps} />
       }
     </Form.Field>
   )
@@ -77,22 +77,21 @@ const RadioComponentItem = (props) => {
 
 RadioComponentItem.defaultProps = {
   value: null,
-  label: null,
   Component: null,
 }
 
 RadioComponentItem.propTypes = {
   value: PropTypes.any,
-  label: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
   Component: PropTypes.any,
 }
+
+RadioComponent.Item = RadioComponentItem
 
 export const RadioArray = styled(RadioComponent)
   .attrs(() => ({
     className: 'RadioArray',
   }))``
-
-RadioArray.Item = RadioComponentItem
 
 RadioArray.propTypes = {
   value: PropTypes.any,
@@ -104,5 +103,4 @@ RadioArray.propTypes = {
 RadioArray.displayName = 'RadioArray'
 
 hoistNonReactStatics(RadioArray, RadioComponent)
-
 

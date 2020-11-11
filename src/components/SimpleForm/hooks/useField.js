@@ -7,13 +7,16 @@ export const useField = (fieldName) => {
     errors,
     setFieldValue,
     setFieldError,
+    handleChange,
   } = React.useContext(FormContext)
 
   return {
     value: values[fieldName],
     error: errors[fieldName],
-    onChange: ({ target }) => setFieldValue(fieldName, target.value),
+    onChange: handleChange,
     setValue: (value) => setFieldValue(fieldName, value),
     setError: (error) => setFieldError(fieldName, error),
+    handleChange,
   }
 }
+

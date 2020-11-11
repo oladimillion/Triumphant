@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { layout, space } from 'styled-system'
-import { Input as SemantiUIInput } from 'semantic-ui-react'
+import hoistNonReactStatics from 'hoist-non-react-statics';
+import { Input as SemanticInput } from 'semantic-ui-react'
 
-export const TextInput = styled(SemantiUIInput)(
+export const TextInput = styled(SemanticInput)(
   space,
   layout,
 )
@@ -19,3 +20,5 @@ TextInput.propTypes = {
   ...layout.propTypes,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.any]),
 }
+
+hoistNonReactStatics(TextInput, SemanticInput)

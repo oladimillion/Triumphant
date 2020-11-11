@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { layout, space } from 'styled-system'
-import { TextArea as UITextArea } from 'semantic-ui-react'
+import { TextArea as SemanticTextArea } from 'semantic-ui-react'
 
 
-const StyledTextArea = styled(UITextArea)(
+const StyledTextArea = styled(SemanticTextArea)(
   {
     resize: 'none',
     border: '1px solid rgba(34,36,38,.15)',
@@ -57,3 +57,4 @@ TextArea.propTypes = {
   ...layout.propTypes,
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.any]),
 }
+
