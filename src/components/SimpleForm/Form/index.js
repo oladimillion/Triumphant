@@ -1,27 +1,36 @@
 import React from 'react'
 import styled from 'styled-components'
-import check from "check-types";
-import Validator from "validatorjs";
+import check from 'check-types';
+import Validator from 'validatorjs';
+import PropTypes from 'prop-types'
+import { isEmptyValue } from '../helpers/isValueEmpty'
 import { FormContext } from '../Context'
 import { buildValidationRules } from '../helpers/buildValidationRules'
-import { buildValidationMessage, buildValidationMessages } from '../helpers/buildValidationMessages'
+import { 
+  buildFieldValidationMessages, 
+  buildFormValidationMessages, 
+} from '../helpers/buildValidationMessages'
 
 const Form = styled.form``
 
-const SimpleForm = (props) => {
+export const SimpleForm = (props) => {
 
   const { 
     children, 
     initialValues,
     validationRules,
     render,
+    onSubmit,
     ...rest
   } = props
 
-  const composedValidationRules = buildValidationRules(validationRules)
-  const { values, setValues } = React.useState(initialValues)
-  const { errors, setErrors } = React.useState({})
-  const { submitting, setSubmitting } = React.useState(false)
+  const composedValidationRules = React.useMemo(() => {
+    return buildValidationRules(validationRules)
+  }, [validationRules])
+
+  const [values, setValues] = React.useState(initialValues)
+  const [errors, setErrors] = React.useState({})
+  const [submitting, setSubmitting] = React.useState(false)
 
   const setFieldError = (fieldName, fieldError) => {
     setErrors({ ...errors, [fieldName]: fieldError })
@@ -34,20 +43,23 @@ const SimpleForm = (props) => {
   }
 
   const setFieldValue = (fieldName, fieldValue) => {
-    if (!check.emptyObject(validationRules)) {
+    const rules = validationRules[fieldName]
+    const hasRules = !isEmptyValue(rules)
+    const validationMessage = hasRules && rules.message
+    if (hasRules) {
       const validator = new Validator(
         { [fieldName]: fieldValue }, 
         { [fieldName]: composedValidationRules[fieldName] },
-        buildValidationMessage(fieldName, validationRules[fieldName].message),
-      );
-      validator.fails(); 
+        buildFieldValidationMessages(fieldName, validationMessage)
+      )
+      validator.fails()
       setFieldError(fieldName, validator.errors.get(fieldName))
     }
     setValues({ ...values, [fieldName]: fieldValue })
   }
 
   const handleSubmit = (event) => {
-    event?.preventDefault()
+    event.preventDefault()
 
     let fails = false
 
@@ -55,7 +67,7 @@ const SimpleForm = (props) => {
       const validator = new Validator(
         values,
         composedValidationRules,
-        buildValidationMessages(validationRules),
+        buildFormValidationMessages(validationRules),
       );
       fails = validator.fails();
       setErrors(validator.errors.all())
@@ -66,11 +78,11 @@ const SimpleForm = (props) => {
     }
   }
 
-  const handleChange = React.useCallback((e, val) => {
+  const handleChange = (e, val) => {
     console.log(val)
     const { name, value } = e.target
     setFieldValue(name, value)
-  }, [])
+  }
 
   const contextValue = {
     setFieldValue,
@@ -78,11 +90,12 @@ const SimpleForm = (props) => {
     setSubmitting,
     resetForm,
     submitting,
-    dirty: !!Object.keys(errors).length,
+    dirty: !isEmptyValue(errors),
     values,
     errors,
     handleSubmit,
     handleChange,
+    formValidationRules: composedValidationRules,
   }
 
   const renderChildren = () => {

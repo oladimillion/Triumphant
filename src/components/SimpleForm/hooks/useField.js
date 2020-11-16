@@ -8,15 +8,23 @@ export const useField = (fieldName) => {
     setFieldValue,
     setFieldError,
     handleChange,
+    formValidationRules,
   } = React.useContext(FormContext)
 
+  const fieldValidationRules = formValidationRules[fieldName] || ''
+  const required = fieldValidationRules.includes('required')
+  const value = values[fieldName]
+
   return {
-    value: values[fieldName],
+    value,
     error: errors[fieldName],
     onChange: handleChange,
     setValue: (value) => setFieldValue(fieldName, value),
     setError: (error) => setFieldError(fieldName, error),
+    onBlur: () => setFieldValue(fieldName, value),
     handleChange,
+    fieldValidationRules, 
+    required,
   }
 }
 

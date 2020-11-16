@@ -12,4 +12,5 @@ export const FormContext = React.createContext({
   dirty: false,
   values: {},
   errors: {},
+  formValidationRules: {},
 })

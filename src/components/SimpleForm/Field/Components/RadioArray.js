@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { RadioArray as BaseRadioArray } from '../Components'
+import { RadioArray as BaseRadioArray } from '../../Components'
 
 export const RadioArray = ({ name, value, options, ...rest }) => (
   <BaseRadioArray name={name} value={value} {...rest}>

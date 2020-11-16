@@ -9,6 +9,7 @@ import { Container } from './Container'
 import { RadioArray, Radio } from '../SimpleForm/Components/Radio'
 import { FlexBox } from '../SimpleForm/Components/FlexBox'
 import { Text } from '../SimpleForm/Components/Text'
+import { Form } from './Form'
 import { countries } from './consts'
 
 export const StoryBooks = () => {
@@ -86,14 +87,14 @@ export const StoryBooks = () => {
       <Segment>
         <Header as='h3'>RadioArray</Header>
         <RadioArray name='radio' value='this'>
-          <RadioArray.Item label='This label' value='this' />
-          <RadioArray.Item label='That label' value='that' />
-          <RadioArray.Item label='Them label' value='them' />
+          <RadioArray.Item text='This label' value='this' />
+          <RadioArray.Item text='That label' value='that' />
+          <RadioArray.Item text='Them label' value='them' />
         </RadioArray>
         <Divider />
         <RadioArray name='select' value={true}>
-          <RadioArray.Item label='Yes' value={false} />
-          <RadioArray.Item label='No' value={true} />
+          <RadioArray.Item text='Yes' value={false} />
+          <RadioArray.Item text='No' value={true} />
         </RadioArray>
       </Segment>
 
@@ -115,7 +116,7 @@ export const StoryBooks = () => {
       </Segment>
 
       <Segment>
-        <Header as='h3'>FlexBox</Header>
+        <Header as='h3'>Text</Header>
         <Text as='span'>span tag</Text>
         <Divider />
         <Text>p tag</Text>
@@ -123,6 +124,11 @@ export const StoryBooks = () => {
         <Text as='i'>i tag</Text>
         <Divider />
         <Text as='label'>label tag</Text>
+      </Segment>
+
+      <Segment>
+        <Header as='h3'>Form</Header>
+        <Form />
       </Segment>
 
     </Container>
