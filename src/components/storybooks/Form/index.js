@@ -1,5 +1,5 @@
 import React from 'react'
-import { SimpleForm, Field, Button } from '../../SimpleForm'
+import { SimpleForm, Field, Action } from '../../SimpleForm'
 
 
 const validationRules = {
@@ -12,6 +12,9 @@ const validationRules = {
   url: {
     validations: 'url',
   },
+  file_multiple: {
+    validations: 'required',
+  },
   email: {
     validations: 'email',
   },
@@ -19,21 +22,27 @@ const validationRules = {
 
 export const Form = () => {
 
-  const onSubmit = (data) => {
-    console.log(data)
+  const onSubmit = async () => { }
+
+  const initialValues = {
+    email: 'test@email.com',
+    file_multiple: ['https://google.com', 'https://wikipedia.com']
   }
 
   return (
     <SimpleForm 
       onSubmit={onSubmit}
       validationRules={validationRules}
+      initialValues={initialValues}
     >
-      <Field type='text' label='Text Field' name='text' />
+      <Field type='text' label='Text Field' name='text' placeholder='Text field' />
       <Field type='password' label='Password Field' name='password' />
       <Field type='url' label='Url Field' name='url' />
       <Field type='email' label='Email Field' name='email' />
-      <Field type='file' label='Field Field' name='file' />
-      <Button type='submit' primary>Save</Button>
+      <Field type='file' label='File Field' name='file' />
+      <Field type='file' label='Multi-File Field' name='file_multiple' multiple />
+      <Field type='test' label='Unsupported' name='test' />
+      <Action primary>Save</Action>
     </SimpleForm>
   )
 }

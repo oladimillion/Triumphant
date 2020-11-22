@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import check from 'check-types';
 import Validator from 'validatorjs';
 import PropTypes from 'prop-types'
+import { withErrorBoundary } from '../hoc'
 import { isEmptyValue } from '../helpers/isValueEmpty'
 import { FormContext } from '../Context'
 import { buildValidationRules } from '../helpers/buildValidationRules'
@@ -10,10 +11,11 @@ import {
   buildFieldValidationMessages, 
   buildFormValidationMessages, 
 } from '../helpers/buildValidationMessages'
+import { fieldTypes } from '../helpers/fieldTypes'
 
 const Form = styled.form``
 
-export const SimpleForm = (props) => {
+export const SimpleForm = withErrorBoundary((props) => {
 
   const { 
     children, 
@@ -58,7 +60,7 @@ export const SimpleForm = (props) => {
     setValues({ ...values, [fieldName]: fieldValue })
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
     let fails = false
@@ -74,14 +76,25 @@ export const SimpleForm = (props) => {
     }
 
     if (check.emptyObject(validationRules) || !fails) {
-      onSubmit({ values, submitting });
+      try {
+        setSubmitting(true)
+        await onSubmit({ values, errors, submitting, resetForm })
+      } finally {
+        setSubmitting(false)
+      }
     }
   }
 
-  const handleChange = (e, val) => {
-    console.log(val)
-    const { name, value } = e.target
-    setFieldValue(name, value)
+  const handleChange = (e, props) => {
+    const { name, value, files } = e.target
+    const { type, multiple } = props
+    if (type === fieldTypes.FILE && multiple) {
+      setFieldValue(name, files)
+    } else if (type === fieldTypes.FILE) {
+      setFieldValue(name, files[0])
+    } else {
+      setFieldValue(name, value)
+    }
   }
 
   const contextValue = {
@@ -108,15 +121,13 @@ export const SimpleForm = (props) => {
   }
 
   return (
-    <FormContext.Provider
-      value={contextValue}
-    >
+    <FormContext.Provider value={contextValue}>
       <Form {...rest} onSubmit={handleSubmit}>
         {renderChildren()}
       </Form>
     </FormContext.Provider>
   )
-}
+})
 
 SimpleForm.defaultProps = {
   validationRules: {},
