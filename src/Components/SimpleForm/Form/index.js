@@ -4,7 +4,7 @@ import check from 'check-types';
 import Validator from 'validatorjs';
 import PropTypes from 'prop-types'
 import { withErrorBoundary } from '../hoc'
-import { isEmptyValue } from '../helpers/isValueEmpty'
+import { isEmptyValue } from '../helpers/isEmptyValue'
 import { FormContext } from '../Context'
 import { buildValidationRules } from '../helpers/buildValidationRules'
 import { 

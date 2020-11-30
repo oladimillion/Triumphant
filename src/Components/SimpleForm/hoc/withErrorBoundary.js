@@ -6,7 +6,7 @@ const Info = styled.i`
   text-decoration: underline;
 `
 
-class ErrorBoundary extends React.Component {
+export class ErrorBoundary extends React.Component {
   state = { hasError: false }
 
   static getDerivedStateFromError() {    

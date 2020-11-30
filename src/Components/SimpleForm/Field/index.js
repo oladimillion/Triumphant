@@ -55,7 +55,7 @@ export const Field = (props) => {
 
 
   return (
-    <FlexBox flexDirection='column' my={3}>
+    <FlexBox flexDirection='column' my={2} mb={3}>
       <FlexBox mb={2}>
         {label && <Label>{label}</Label>}
         {required && <Required as='span'>*</Required>}
