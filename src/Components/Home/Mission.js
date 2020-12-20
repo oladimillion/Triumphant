@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components'
+import { homeSectionStyle } from './styled'
+
 
 const MissionWrapper = styled.div`
-  min-height: 306px;
-  height: auto;
   padding: 20px 40px;
   margin-bottom: 30px;
 `
@@ -19,13 +19,17 @@ const MissionImage = styled.div`
   font-weight: bold;
 `
 
-const MissionTitle = styled.div`
-  font-size: 20px;
-  line-height: 21px;
-  margin-top: 30px;
-  font-weight: bold;
-  color: #085879;
+const MissionTitle = styled.h3`
+  ${homeSectionStyle};
   text-align: right;
+
+  a {
+    font-size: 20px;
+    line-height: 21px;
+    margin-top: 30px;
+    font-weight: bold;
+    color: #085879;
+  }
 `
 
 const MissionText = styled.p`
@@ -57,8 +61,10 @@ const Flex = styled.div`
 
 export const Mission = () => {
   return (
-    <MissionWrapper id="mission">
-      <MissionTitle>Mission</MissionTitle>
+    <MissionWrapper>
+      <MissionTitle id="mission">
+        <a href="#mission">Mission</a>
+      </MissionTitle>
       <Flex>
         <MissionImage>Photo</MissionImage>
         <MissionText>

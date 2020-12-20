@@ -7,7 +7,7 @@ import {
   Mission,
   Map,
   Footer
-} from '../../components/Home'
+} from '../../Components/Home'
 
 const HomeWrapper = styled.main`
   width: 100%;
@@ -37,3 +37,5 @@ export const Home = () => {
     </HomeWrapper>
   )
 }
+
+export { Home as default } 

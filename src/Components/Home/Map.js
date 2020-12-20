@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components'
 import mapBg from '../../assets/mapbg.svg'
+import { homeSectionStyle } from './styled'
 
 
+  // height: 488px;
 const MapWrapper = styled.div`
-  height: 488px;
   border: 1px solid #ddd;
   border-radius: 5px;
 `
@@ -35,6 +36,10 @@ const MapEllipse = styled.div`
   position: relative;
 `
 
+const MapTitle = styled.h3`
+  ${homeSectionStyle};
+`
+
 const Flex = styled.div`
   margin-top: 40px;
   display: flex;
@@ -48,7 +53,8 @@ const Flex = styled.div`
 
 export const Map = () => {
   return (
-    <MapWrapper id="map">
+    <MapWrapper>
+      <MapTitle id="map" />
       <Flex>
         <MapIFrame
           src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_GOOGLE_MAP_API_KEY}&q=Space+Needle,Seattle+WA`} 
