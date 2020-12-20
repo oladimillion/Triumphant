@@ -137,7 +137,7 @@ export const SideNav = () => {
         <NavItemWrapper>
           <NavItems>
             {items.map(({ href, text }) => (
-              <NavItem href={href} onClick={toggleSideNav}>{text}</NavItem>
+              <NavItem key={text} href={href} onClick={toggleSideNav}>{text}</NavItem>
             ))}
           </NavItems>
         </NavItemWrapper>
