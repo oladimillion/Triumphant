@@ -1,3 +1,6 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7980c3a7-0d40-408b-bd39-d1536cfcca43/deploy-status)](https://app.netlify.com/sites/triumphant/deploys)
+
+
 This project is deployed [HERE](https://oladimillion.github.io/Triumphant).
 
 
