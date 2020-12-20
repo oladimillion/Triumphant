@@ -1,9 +1,10 @@
 This project is deployed [HERE](https://oladimillion.github.io/Triumphant).
 
-## Screenshots
 
-### Home
+#### Screenshots
+##### Home
 ![Screenshot from 2020-12-20 21-43-10](https://user-images.githubusercontent.com/23438586/102724000-7bc35700-430c-11eb-9a62-cb00bf81868e.png)
+
 
 ## Available Scripts
 
