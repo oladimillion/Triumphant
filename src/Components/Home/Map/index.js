@@ -7,6 +7,7 @@ import { homeSectionStyle } from '../styled'
 
 const MapWrapper = styled.div`
   border-radius: 5px;
+  padding: 20px 40px;
 `
 
 const MapTitle = styled.h3`
@@ -22,6 +23,7 @@ const Flex = styled(FlexBox)`
 
   @media (max-width: 700px) {
     flex-direction: column;
+    height: 250px;
   }
 `
 
