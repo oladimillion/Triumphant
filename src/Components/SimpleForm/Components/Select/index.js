@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { layout, space } from 'styled-system'
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import { Select as UISelect } from 'semantic-ui-react'
+import { disabled } from '../styled'
 
 export const Select = styled(UISelect)(
   {
@@ -10,6 +11,7 @@ export const Select = styled(UISelect)(
   },
   space,
   layout,
+  disabled,
 )
 
 Select.displayName = 'Select'

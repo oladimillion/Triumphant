@@ -10,6 +10,7 @@ export const FormContext = React.createContext({
   validateField: () => {},
   submitting: false,
   dirty: false,
+  readOnly: false,
   values: {},
   errors: {},
   formValidationRules: {},

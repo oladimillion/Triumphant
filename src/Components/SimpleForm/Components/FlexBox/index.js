@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { layout, space, flexbox } from 'styled-system'
+import { background, layout, space, flexbox } from 'styled-system'
 
 export const FlexBox = styled.div.attrs(() => ({
   className: 'FlexBox',
@@ -7,6 +7,7 @@ export const FlexBox = styled.div.attrs(() => ({
   ${space};
   ${layout};
   ${flexbox};
+  ${background};
 `
 
 FlexBox.displayName = 'FlexBox'
@@ -15,6 +16,7 @@ FlexBox.propTypes = {
   ...space.propTypes,
   ...layout.propTypes,
   ...flexbox.propTypes,
+  ...background.propTypes,
 }
 
 FlexBox.defaultProps = {

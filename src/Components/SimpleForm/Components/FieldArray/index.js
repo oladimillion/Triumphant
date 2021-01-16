@@ -7,11 +7,13 @@ import { FlexBox } from '../FlexBox'
 import { Button } from '../Button'
 import { Label } from '../Label'
 import { useField } from '../../hooks/useField'
+import { useFormContext } from '../../hooks/useFormContext'
 import { isEmptyValue } from  '../../helpers/isEmptyValue'
 
 export const FieldArray = (props) => {
   const { name, children, render, label, ...rest } = props
-  const { value, setValue } = useField(name) 
+  const { value, setValue, readOnly, submitting } = useField(name) 
+  const disabled = readOnly || submitting || rest.disabled
 
   check.assert.string(name, 'name is required')
   check.assert.function(children, 'children must be a function')
@@ -24,22 +26,30 @@ export const FieldArray = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  console.log({ value })
+  const add = (defaultValue) => {
 
-  const add = () => {
-    setValue([...value, {}])
+    if (disabled) return
+
+    // ensuring defaultValue is serializable
+    try {
+      JSON.stringify(defaultValue)
+    } catch(e) {
+      defaultValue = null
+    }
+    setValue([...value, defaultValue || {}])
   }
   const remove = (index) => {
+    if (disabled) return
     if (value?.length > 1) {
       setValue(value.filter((_, i) => i !== index))
     }
   }
-  const args = { value: value || [], add, remove }
+  const args = { values: value || [], add, remove }
 
   return (
-    <FlexBox flexDirection='column'>
+    <FlexBox flexDirection='column' {...rest}>
       {label && <Label>{label}</Label>}
-      <Wrapper flexDirection='column' my={1} {...rest}>
+      <Wrapper>
         {children && children(args)}
         {render && render(args)}
       </Wrapper>
@@ -62,7 +72,9 @@ const Item = styled(FlexBox).attrs(() => ({
 `
 
 const RemoveButton = styled((props) => {
-  return <Icon name='cancel' {...props} />
+  const { submitting, readOnly } = useFormContext()
+  const disabled = submitting || readOnly
+  return <Icon {...props} name='cancel' disabled={disabled}/>
 })`
   position: absolute;
   top: 9px;
@@ -74,7 +86,17 @@ const RemoveButton = styled((props) => {
 
 const AddButton = styled((props) => {
   const { children, ...rest } = props
-  return <Button {...rest} type='button'>{children}</Button>
+  const { submitting, readOnly } = useFormContext()
+  const disabled = submitting || readOnly
+  return (
+    <Button 
+      {...rest} 
+      disabled={disabled} 
+      type='button'
+    >
+      {children}
+    </Button>
+  )
 })`
   && {
     margin: 0;

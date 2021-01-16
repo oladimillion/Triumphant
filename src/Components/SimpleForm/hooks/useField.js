@@ -1,5 +1,6 @@
-import React from 'react'
-import { FormContext } from '../Context'
+import { get } from 'lodash'
+import { getPath } from '../helpers/getPath'
+import { useFormContext } from './useFormContext'
 
 export const useField = (fieldName) => {
   const {
@@ -9,15 +10,22 @@ export const useField = (fieldName) => {
     setFieldError,
     handleChange,
     formValidationRules,
-  } = React.useContext(FormContext)
+    readOnly,
+    submitting,
+  } = useFormContext()
 
-  const fieldValidationRules = formValidationRules[fieldName] || ''
+  const fieldValidationRules = get(formValidationRules, getPath(fieldName), '')
   const required = fieldValidationRules.includes('required')
-  const value = values[fieldName]
+  const value = get(values, fieldName)
+  let error = get(errors, fieldName, [])
+  try {
+    // replacing fieldArray field's name with ''
+    error = error.map(e => e.replace(fieldName, ''))
+  } catch {}
 
   return {
     value,
-    error: errors[fieldName],
+    error,
     onChange: handleChange,
     setValue: (value) => setFieldValue(fieldName, value),
     setError: (error) => setFieldError(fieldName, error),
@@ -25,6 +33,8 @@ export const useField = (fieldName) => {
     handleChange,
     fieldValidationRules, 
     required,
+    readOnly,
+    submitting,
   }
 }
 

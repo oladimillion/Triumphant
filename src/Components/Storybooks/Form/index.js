@@ -1,31 +1,59 @@
 import React from 'react'
 import { SimpleForm, Field, Action, FieldArray } from '../../SimpleForm'
+import { countries } from '../consts'
 
 
 const validationRules = {
   text: {
-    validations: 'required',
+    validation: 'required',
+    message: {
+      required: 'The field is required'
+    }
   },
   password: {
-    validations: 'required|min:3',
+    validation: 'required|min:3',
   },
   url: {
-    validations: 'url',
+    validation: 'url',
   },
   file_multiple: {
-    validations: 'required',
+    validation: 'required',
   },
   email: {
-    validations: 'email',
+    validation: 'email',
+  },
+  'fieldArray.*.textarea': {
+    validation: 'required',
+    message: {
+      required: 'The field is required'
+    }
+  },
+  'fieldArray.*.number': {
+    validation: 'required',
+    message: {
+      required: 'The field is required'
+    }
+  },
+  'fieldArray.*.myemail': {
+    validation: 'email|required',
+    message: {
+      required: 'The field is required',
+    }
   },
 }
 
 export const Form = () => {
 
-  const onSubmit = async () => { }
+  // const onSubmit = async () => { }
+  const onSubmit = async (args) => { 
+    console.log(args)
+  }
 
   const initialValues = {
     email: 'test@email.com',
+    number: '123349823983928',
+    password: '123349823983928',
+    select: 'af',
     file_multiple: ['https://google.com', 'https://wikipedia.com']
   }
 
@@ -34,6 +62,7 @@ export const Form = () => {
       onSubmit={onSubmit}
       validationRules={validationRules}
       initialValues={initialValues}
+      readOnly={false}
     >
       <Field type='test' label='Unsupported' name='test' />
       <Field type='text' label='Text Field' name='text' placeholder='Text field' />
@@ -43,13 +72,14 @@ export const Form = () => {
       <Field type='file' label='File Field' name='file' />
       <Field type='file' label='Multi-File Field' name='file_multiple' multiple />
       <FieldArray name='fieldArray' label='Field Array'>
-        {({ value, add, remove }) => (
+        {({ values, add, remove }) => (
           <FieldArray.Item mb={2}>
-            {value.map((_, index) => (
+            {values.map((_, index) => (
               <FieldArray.Item key={index}>
                 <FieldArray.RemoveButton onClick={() => remove(index)} />
-                <Field type='textarea' label='TextArea Field' name={`fieldArray.textarea.${index}`} />
-                <Field type='number' label='Number Field' name={`fieldArray.number.${index}`} />
+                <Field type='textarea' label='TextArea Field' name={`fieldArray.${index}.textarea`} />
+                <Field type='number' label='Number Field' name={`fieldArray.${index}.number`} />
+                <Field type='email' label='Email Field' name={`fieldArray.${index}.myemail`} />
                 <FieldArray.Divider />
               </FieldArray.Item>
             ))}
@@ -58,6 +88,20 @@ export const Form = () => {
         )}
       </FieldArray>
       <Field type='number' label='Number Field' name='number' />
+      <Field 
+        label='Select Field'
+        options={countries} 
+        type='select' 
+        name='select'
+        placeholder='Select your country'
+      />
+      <Field 
+        label='Select Field'
+        options={countries} 
+        type='select' 
+        name='select2'
+        placeholder='Select your country'
+      />
       <Action primary>Save</Action>
     </SimpleForm>
   )

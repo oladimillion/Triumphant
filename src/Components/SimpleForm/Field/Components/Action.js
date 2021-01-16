@@ -4,13 +4,13 @@ import { Button } from '../../Components/Button'
 import { useFormContext } from '../../hooks'
 
 export const Action = (props) => {
-  const { children, ...rest } = props
-  const { submitting } = useFormContext()
+  const { children, disabled, ...rest } = props
+  const { submitting, readOnly } = useFormContext()
 
   return (
     <Button 
       loading={submitting} 
-      disabled={submitting} 
+      disabled={submitting || readOnly || disabled} 
       {...rest}
     >
       {children}

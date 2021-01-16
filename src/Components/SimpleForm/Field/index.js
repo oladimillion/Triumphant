@@ -1,4 +1,5 @@
 import React from 'react'
+import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import { Checkbox } from 'semantic-ui-react'
 import styled from 'styled-components'
@@ -35,7 +36,14 @@ const InputComponentTypes = {
 
 export const Field = (props) => {
 
-  const { label, type, Component: CustomField, ...rest } = props
+  const { 
+    label, 
+    type, 
+    includeFileLink,
+    Component: CustomField, 
+    disabled,
+    ...rest 
+  } = props
 
   const {
     error,
@@ -43,9 +51,10 @@ export const Field = (props) => {
     onChange,
     onBlur,
     required,
+    readOnly,
   } = useField(props.name)
 
-  const Component = CustomField || InputComponentTypes[type] || Unsupported
+  const Component = CustomField || get(InputComponentTypes, type, Unsupported)
   const FieldComponent = React.useCallback((props) => <Component  {...props} />, [])
   const isFileField = type === fieldTypes.FILE
 
@@ -53,13 +62,14 @@ export const Field = (props) => {
     return isFileField ? {} : { value: value || ''} 
   }, [value, isFileField])
 
+  const errors = check.array(error) ? error : [error]
 
   return (
-    <FlexBox flexDirection='column' my={2} mb={3}>
+    <FlexBox flexDirection='column' my={3}>
       <FlexBox mb={2}>
         {label && <Label>{label}</Label>}
         {required && <Required as='span'>*</Required>}
-        {isFileField && castArray(value).map((link, index) => {
+        {(isFileField && includeFileLink) && castArray(value).map((link, index) => {
           return check.string(link) && (
             <FileLink 
               key={index}
@@ -73,12 +83,19 @@ export const Field = (props) => {
       <FieldComponent 
         {...rest}
         {...fieldValue}
+        disabled={readOnly || disabled}
         type={type}
         onChange={onChange} 
         onBlur={onBlur} 
         error={!isEmptyValue(error)} 
       />
-      {error && <ErrorMessage>{error}</ErrorMessage>}
+      {errors.map((error, index) => (
+        !isEmptyValue(error) && (
+          <ErrorMessage key={index}>
+            {error}
+          </ErrorMessage>
+        )
+      ))}
     </FlexBox>
   )
 }
@@ -92,10 +109,15 @@ const FileLink = styled.a`
   margin-left: 8px;
 `
 
+Field.defaultProps = {
+  includeFileLink: true,
+}
+
 Field.propTypes = {
+  Component: PropTypes.oneOfType([PropTypes.node, PropTypes.elementType]),
   label: PropTypes.string,
-  type: PropTypes.string.isRequired,
+  includeFileLink: PropTypes.bool,
   name: PropTypes.string.isRequired,
-  Component: PropTypes.node,
+  type: PropTypes.string,
 }
 

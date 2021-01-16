@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import { get, set, cloneDeep } from 'lodash'
 import check from 'check-types';
 import Validator from 'validatorjs';
 import PropTypes from 'prop-types'
 import { withErrorBoundary } from '../hoc'
 import { isEmptyValue } from '../helpers/isEmptyValue'
+import { getPath } from '../helpers/getPath'
 import { FormContext } from '../Context'
 import { buildValidationRules } from '../helpers/buildValidationRules'
 import { 
@@ -15,7 +17,7 @@ import { fieldTypes } from '../helpers/fieldTypes'
 
 const Form = styled.form``
 
-export const SimpleForm = withErrorBoundary((props) => {
+const FormView = (props) => {
 
   const { 
     children, 
@@ -23,6 +25,7 @@ export const SimpleForm = withErrorBoundary((props) => {
     validationRules,
     render,
     onSubmit,
+    readOnly,
     ...rest
   } = props
 
@@ -35,7 +38,8 @@ export const SimpleForm = withErrorBoundary((props) => {
   const [submitting, setSubmitting] = React.useState(false)
 
   const setFieldError = (fieldName, fieldError) => {
-    setErrors({ ...errors, [fieldName]: fieldError })
+    const newErrors = set(cloneDeep(errors), fieldName, fieldError)
+    setErrors(newErrors)
   }
 
   const resetForm = () => {
@@ -45,32 +49,36 @@ export const SimpleForm = withErrorBoundary((props) => {
   }
 
   const setFieldValue = (fieldName, fieldValue) => {
-    const rules = validationRules[fieldName]
-    const hasRules = !isEmptyValue(rules)
-    const validationMessage = hasRules && rules.message
-    if (hasRules) {
-      const validator = new Validator(
+    const path = getPath(fieldName)
+    const rules = get(validationRules, path, {})
+    const composedRules = get(composedValidationRules, path, '')
+    const composedMessage = buildFieldValidationMessages(fieldName, rules.message)
+    if (rules.validation) {
+      const validatorParams = [
         { [fieldName]: fieldValue }, 
-        { [fieldName]: composedValidationRules[fieldName] },
-        buildFieldValidationMessages(fieldName, validationMessage)
-      )
+        { [fieldName]: composedRules },
+        composedMessage, 
+      ]
+      const validator = new Validator(...validatorParams)
       validator.fails()
       setFieldError(fieldName, validator.errors.get(fieldName))
     }
-    setValues({ ...values, [fieldName]: fieldValue })
+    const newValues = set(cloneDeep(values), fieldName, fieldValue)
+    setValues(newValues)
   }
 
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event && event.preventDefault()
 
     let fails = false
 
     if (!check.emptyObject(validationRules)) {
-      const validator = new Validator(
+      const validatorParams = [
         values,
         composedValidationRules,
         buildFormValidationMessages(validationRules),
-      );
+      ]
+      const validator = new Validator(...validatorParams)
       fails = validator.fails();
       setErrors(validator.errors.all())
     }
@@ -86,8 +94,11 @@ export const SimpleForm = withErrorBoundary((props) => {
   }
 
   const handleChange = (e, props) => {
-    const { name, value, files } = e.target
-    const { type, multiple } = props
+    const { files, name: targetName, value: targetValue } = e.target
+    const { name: propsName, value: propsValue, type, multiple } = props
+    const name = !isEmptyValue(targetName) ? targetName : propsName
+    const value = !isEmptyValue(targetValue) ? targetValue : propsValue
+
     if (type === fieldTypes.FILE && multiple) {
       setFieldValue(name, files)
     } else if (type === fieldTypes.FILE) {
@@ -109,6 +120,7 @@ export const SimpleForm = withErrorBoundary((props) => {
     handleSubmit,
     handleChange,
     formValidationRules: composedValidationRules,
+    readOnly,
   }
 
   const renderChildren = () => {
@@ -127,18 +139,20 @@ export const SimpleForm = withErrorBoundary((props) => {
       </Form>
     </FormContext.Provider>
   )
-})
-
-SimpleForm.defaultProps = {
-  validationRules: {},
-  initialValues: {},
 }
 
-SimpleForm.propTypes = {
+FormView.defaultProps = {
+  validationRules: {},
+  initialValues: {},
+  readOnly: false,
+}
+
+FormView.propTypes = {
   validationRules: PropTypes.shape({}),
   onSubmit: PropTypes.func,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
   render: PropTypes.func,
 }
 
+export const SimpleForm = withErrorBoundary(FormView)
 

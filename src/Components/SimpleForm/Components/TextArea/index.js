@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { layout, space } from 'styled-system'
 import { TextArea as SemanticTextArea } from 'semantic-ui-react'
+import { disabled } from '../styled'
 
 
 const StyledTextArea = styled(SemanticTextArea)(
@@ -32,14 +33,18 @@ const TextAreaWrapper = styled.div`
       color: #9f3a38;
       box-shadow: none;
     `}
+    ${disabled}
+    &:focus {
+      border-color: #85b7d9;
+    }
   }
 `
 
 export const TextArea = (props) => {
-  const { error, ...rest } = props
+  const { error, disabled, ...rest } = props
   return (
-    <TextAreaWrapper error={error}>
-      <StyledTextArea {...rest} />
+    <TextAreaWrapper error={error} disabled={disabled}>
+      <StyledTextArea {...rest} disabled={disabled} />
     </TextAreaWrapper>
   )
 }

@@ -1,7 +1,7 @@
 
-export const buildFieldValidationMessages = (fieldName, customMessages) => {
-  customMessages = customMessages || {}
-  return Object.entries(customMessages)
+export const buildFieldValidationMessages = (fieldName, message) => {
+  message = message || {}
+  return Object.entries(message)
     .reduce((accum, [validationRule, validationMessage]) => {
       if (!validationRule || !validationMessage) return accum;
       accum[`${validationRule}.${fieldName}`] = validationMessage
@@ -12,9 +12,10 @@ export const buildFieldValidationMessages = (fieldName, customMessages) => {
 export const buildFormValidationMessages = (validationRules) => {
   return Object.entries(validationRules)
     .reduce((accum, [fieldName, others]) =>{
-      const { customMessages } = others;
-      if (!customMessages) return accum;
-      return { ...accum, ...buildFieldValidationMessages(fieldName, customMessages) };
+      const { message } = others;
+      if (!message) return accum;
+      const composedMessage = buildFieldValidationMessages(fieldName, message)
+      return { ...accum, ...composedMessage };
     }, {})
 }
 
